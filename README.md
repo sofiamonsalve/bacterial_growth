@@ -29,34 +29,45 @@ conda env create -f environment.yml
 ````
 > [!NOTE]
 > In case of errors while installing the environment, it could be related to the following issues:
-> Conda Version: Make sure you are using an up-to-date version of Conda. You can update Conda using conda update conda.
-> Package Conflicts: Sometimes, package dependencies conflict with each other. You might need to edit the environment.yml file to specify compatible versions or remove conflicting packages.
->Operating System Compatibility: Certain packages might not be compatible with your operating system. Check the documentation of the problematic package for OS-specific instructions or alternatives.
+> * Conda Version: Make sure you are using an up-to-date version of Conda. You can update Conda using the command: `conda update conda`.
+> - Package Conflicts: Sometimes, package dependencies conflict with each other. You might need to edit the `environment.yml` file to specify compatible versions or remove conflicting packages.
+> * Operating System Compatibility: Certain packages might not be compatible with your operating system. Check the documentation of the problematic package for OS-specific instructions or alternatives.
 
 
-## To init the app 
-
-Under `app/.streamlit` we need to have a file called `secrets.toml` with the following:
+## 2. Init the app 
+This application was developed in [Streamlit] (https://docs.streamlit.io/). To initialize the you need to have
+Under the `app/.streamlit` folder a file called `secrets.toml` with the following:
 ```yaml
 [connections.BacterialGrowth]
 dialect = "mysql"
-username = ""
-password = ""
-host = ""
+username = "yourusername"
+password = "yourpassword"
+host = "yourhost"
 database = "BacterialGrowth"
 ```
+For more information go to the ^[Streamlit's documentation](https://docs.streamlit.io/develop/concepts/connections/secrets-management).
+> [!IMPORTANT]
+> Secrets are private! Do not forget to add the path to the secrets.toml to your `.gitignore`.
 
+Once all of the above is ready, to run the application type the following command:
 
 ```bash
-streamlit run streamlit_app.py --server.fileWatcherType none
+streamlit run app.py
 ```
-
-without the `--server.fileWatcherType` argument I get the following error:
+Did you get this error?
 
 ```bash
     raise OSError(errno.ENOSPC, "inotify watch limit reached")
 OSError: [Errno 28] inotify watch limit reached
 ```
+Try the following command instead.
+
+```bash
+streamlit run app.py --server.fileWatcherType none
+```
+
+> [!NOTE]
+> Remember to be inside the `app` folder or wherever your `app.py` script is located.
 
 
 ### Dependencies
