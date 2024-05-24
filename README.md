@@ -4,27 +4,35 @@ This repository contains the code implemented during my master's thesis in Bioin
 the Laboratory of Microbial Systems Biology located at the Rega Institute in Leuven, Belgium.
 
 **Objective**
+
 The main objective of this thesis was to develop a database of microbial growth data (µGrowthDB) and a web application interface graphical user interface GUI. µGrowthDB was developed to be a community-oriented resource enabling researchers to share, retrieve, and visualize growth data.
 
 **Structure of this repository**
+
 This repository was initially forked from  [Julia Casados's repository](https://github.com/jcasadogp/bacterial_growth), who previously worked on the development of the database schema.
 
 There are three main folders:
-1. app: It contains all the source code of the web application GUI.
-2. env: Including files to set up the environment.
-3. src: with all the code related to the database schema and functions to parse and access data from and into the database.
+1. **app:** It contains all the source code of the web application GUI.
+2. **env:** It includes the yml file required to install all of the python libraries used.
+3. **src:** with all the code related to the database schema and functions to parse and access data from and into the database.
 
 > [!TIP]
-> New to Github and don't how to fork this repository? Go and check all of the different [Github tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) .
+> New to Github and don't how to fork this repository? Go and check all of the different [Github tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
 
+Detailed instructions are provided below on how to run the app locally.
 
-
-# Environment set up
-First, you need to set up the environment that contain all the packages that will be used by the program. To do so, run the following commands:
+## 1. Environment set up
+First, you need to set up the environment that contain all the packages that will be used by application. To do so, run the following commands:
 ````
 cd envs/
 conda env create -f environment.yml
 ````
+> [!NOTE]
+> In case of errors while installing the environment, it could be related to the following issues:
+> Conda Version: Make sure you are using an up-to-date version of Conda. You can update Conda using conda update conda.
+> Package Conflicts: Sometimes, package dependencies conflict with each other. You might need to edit the environment.yml file to specify compatible versions or remove conflicting packages.
+>Operating System Compatibility: Certain packages might not be compatible with your operating system. Check the documentation of the problematic package for OS-specific instructions or alternatives.
+
 
 ## To init the app 
 
