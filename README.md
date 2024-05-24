@@ -1,5 +1,8 @@
 # µGrowthDB: A database interface and GUI for the collection and analysis of microbial growth data
 
+# Table of contents
+1. [Introduction](#introduction)
+
 This repository contains the code implemented during my master's thesis in Bioinformatics at KU Leuven with the colaboration of
 the Laboratory of Microbial Systems Biology located at the Rega Institute in Leuven, Belgium.
 
@@ -21,7 +24,7 @@ There are three main folders:
 
 Detailed instructions are provided below on how to run the app locally.
 
-## 1. Environment set up
+## 1. Environment set up <a name="introduction"></a>
 First, you need to set up the environment that contain all the packages that will be used by application. To do so, run the following commands:
 ````
 cd envs/
