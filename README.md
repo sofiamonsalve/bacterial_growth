@@ -1,4 +1,23 @@
-# bacterial_growth
+# µGrowthDB: A database interface and GUI for the collection and analysis of microbial growth data
+
+This repository contains the code implemented during my master's thesis in Bioinformatics at KU Leuven with the colaboration of
+the Laboratory of Microbial Systems Biology located at the Rega Institute in Leuven, Belgium.
+
+**Objective**
+The main objective of this thesis was to develop a database of microbial growth data (µGrowthDB) and a web application interface graphical user interface GUI. µGrowthDB was developed to be a community-oriented resource enabling researchers to share, retrieve, and visualize growth data.
+
+**Structure of this repository**
+This repository was initially forked from  [Julia Casados's repository](https://github.com/jcasadogp/bacterial_growth), who previously worked on the development of the database schema.
+
+There are three main folders:
+1. app: It contains all the source code of the web application GUI.
+2. env: Including files to set up the environment.
+3. src: with all the code related to the database schema and functions to parse and access data from and into the database.
+
+> [!TIP]
+> New to Github and don't how to fork this repository? Go and check all of the different [Github tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) .
+
+
 
 # Environment set up
 First, you need to set up the environment that contain all the packages that will be used by the program. To do so, run the following commands:
