@@ -1,8 +1,5 @@
 # µGrowthDB: A database interface and GUI for the collection and analysis of microbial growth data
 
-# Table of contents
-1. [Introduction](#introduction)
-
 This repository contains the code implemented during my master's thesis in Bioinformatics at KU Leuven with the colaboration of
 the Laboratory of Microbial Systems Biology located at the Rega Institute in Leuven, Belgium.
 
@@ -22,9 +19,15 @@ There are three main folders:
 > [!TIP]
 > New to Github and don't how to fork this repository? Go and check all of the different [Github tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
 
-Detailed instructions are provided below on how to run the app locally.
+## Table of contents
+1. [Environment set up](#1)
+2. [Creation of the database](#2)
+3. [Init the app](#3)
+3. [Additional Dependencies](#4)
+4. [Demos](#5)
 
-## 1. Environment set up <a name="introduction"></a>
+
+## 1. Environment set up <a name="1"></a>
 First, you need to set up the environment that contain all the packages that will be used by application. To do so, run the following commands:
 ````
 cd envs/
@@ -36,7 +39,7 @@ conda env create -f environment.yml
 > - Package Conflicts: Sometimes, package dependencies conflict with each other. You might need to edit the `environment.yml` file to specify compatible versions or remove conflicting packages.
 > * Operating System Compatibility: Certain packages might not be compatible with your operating system. Check the documentation of the problematic package for OS-specific instructions or alternatives.
 
-## 2. Create the database
+## 2. Create the database <a name="2"></a>
 
 µGrowthDB is a MySQL database, in order to run the app you need first to have the database locally in your machine.
 
@@ -150,7 +153,7 @@ mysql> LOAD DATA INFILE '/var/lib/mysql-files/unicellular_ncbi_ids_preferred_nam
 ```
 
 
-## 3. Init the app 
+## 3. Init the app <a name="3"></a>
 Once all of the above is ready, to run the application type the following command:
 
 ```bash
@@ -172,7 +175,7 @@ streamlit run app.py --server.fileWatcherType none
 > Remember to be inside the `app` folder or wherever your `app.py` script is located.
 
 
-## Dependencies
+## Dependencies <a name="4"></a>
 
 ```bash
 pip install -U Flask-SQLAlchemy
@@ -185,4 +188,7 @@ pip install streamlit-tags
 ```
 for the tags in the upload page.
 
-`openpyxl>=3.1.0` 
+`openpyxl>=3.1.0`
+
+## Demos <a name="5"></a>
+
