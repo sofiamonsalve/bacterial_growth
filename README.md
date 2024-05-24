@@ -46,39 +46,19 @@ Go to [MySQL Server](https://dev.mysql.com/downloads/mysql/) and download the pr
 Once MySQL is installed and running, you need to create the µGrowthDB database. Open the MySQL command-line client (usually comes with the installation of MySQL Server).Log in as the root user or another user with the necessary privileges:
 
 ````
-
 mysql -u root -p
 ````
 
 It will ask for your password which you had to create during the installation. Once logged in, type the command `source` plus the path to the database schema:
 
 ````
-
 source ../bacterial_growth/src/sql_scripts/create_db.sql;
 ````
-
 > [!NOTE]
 > Make your the provided path is compleate and correct, this can change depending on where are you located.
 
-### 3. Populate the metabolite table from the MCO Ontology and the taxa table from NCBI taxonomy
+Once the datase is created different functions and scripts within the code access it in order to populate and retrieve data. For this reason, you need to have under the `app/.streamlit` folder a file called `secrets.toml` with the following:
 
-This database also includes metabolite names and IDs gathered from the MCO ontology, as well as taxa information from the NCBI taxonomy database.
-
-#### 1. Populate the Metabolites table
-
-To populate this table into the database go `src/sql_scripts` and run the `populate_metadb.py` with the following command:
-
-````
-
-python populate_metadb.py
-````
-
-#### 2. Populate the Taxa table
-
-
-## 3. Init the app 
-This application was developed in [Streamlit](https://docs.streamlit.io/). To initialize the you need to have
-Under the `app/.streamlit` folder a file called `secrets.toml` with the following:
 ```yaml
 [connections.BacterialGrowth]
 dialect = "mysql"
@@ -92,49 +72,20 @@ For more information go to the [Streamlit's documentation](https://docs.streamli
 > [!IMPORTANT]
 > Secrets are private! Do not forget to add the path to the secrets.toml to your `.gitignore`.
 
-Once all of the above is ready, to run the application type the following command:
 
-```bash
-streamlit run app.py
-```
-Did you get this error?
+### 3. Populate the metabolite table from the MCO Ontology and the taxa table from NCBI taxonomy
 
-```bash
-    raise OSError(errno.ENOSPC, "inotify watch limit reached")
-OSError: [Errno 28] inotify watch limit reached
-```
-Try the following command instead.
+This database also includes metabolite names and IDs gathered from the MCO ontology, as well as taxa information from the NCBI taxonomy database.
 
-```bash
-streamlit run app.py --server.fileWatcherType none
-```
+#### 1. Populate the Metabolites table
 
-> [!NOTE]
-> Remember to be inside the `app` folder or wherever your `app.py` script is located.
+To populate this table into the database go `src/sql_scripts` and run the `populate_metadb.py` with the following command:
 
+````
+python populate_metadb.py
+````
 
-### Dependencies
-
-```bash
-pip install -U Flask-SQLAlchemy
-```
-The `Flask-SQLAlchemy` is required for the `st.connection` to work. 
-
-
-```bash
-pip install streamlit-tags
-```
-for the tags in the upload page.
-
-
-
-
-`openpyxl>=3.1.0` 
-
-
-### To periodically update 
-
-<!-- From [NCBI Taxonomy FTP](https://ftp.ncbi.nih.gov/pub/taxonomy/), we get the latest `taxdump.tar.gz`. -->
+#### 2. Populate the Taxa table
 
 From [JensenLab FTP](https://download.jensenlab.org) we download the `organisms_dictionary.tar.gz` file. 
 
@@ -195,3 +146,40 @@ mysql> LOAD DATA INFILE '/var/lib/mysql-files/unicellular_ncbi_ids_preferred_nam
 
 ```
 
+
+## 3. Init the app 
+Once all of the above is ready, to run the application type the following command:
+
+```bash
+streamlit run app.py
+```
+Did you get this error?
+
+```bash
+    raise OSError(errno.ENOSPC, "inotify watch limit reached")
+OSError: [Errno 28] inotify watch limit reached
+```
+Try the following command instead.
+
+```bash
+streamlit run app.py --server.fileWatcherType none
+```
+
+> [!NOTE]
+> Remember to be inside the `app` folder or wherever your `app.py` script is located.
+
+
+## Dependencies
+
+```bash
+pip install -U Flask-SQLAlchemy
+```
+The `Flask-SQLAlchemy` is required for the `st.connection` to work. 
+
+
+```bash
+pip install streamlit-tags
+```
+for the tags in the upload page.
+
+`openpyxl>=3.1.0` 
