@@ -33,9 +33,51 @@ conda env create -f environment.yml
 > - Package Conflicts: Sometimes, package dependencies conflict with each other. You might need to edit the `environment.yml` file to specify compatible versions or remove conflicting packages.
 > * Operating System Compatibility: Certain packages might not be compatible with your operating system. Check the documentation of the problematic package for OS-specific instructions or alternatives.
 
+## 2. Create the database
 
-## 2. Init the app 
-This application was developed in [Streamlit] (https://docs.streamlit.io/). To initialize the you need to have
+µGrowthDB is a MySQL database, in order to run the app you need first to have the database locally in your machine.
+
+### 1. Install MySQL Server
+
+Go to [MySQL Server](https://dev.mysql.com/downloads/mysql/) and download the program. Follow the installation instructions provided for your specific OS.
+
+### 2. Create a local version of µGrowthDB
+
+Once MySQL is installed and running, you need to create the µGrowthDB database. Open the MySQL command-line client (usually comes with the installation of MySQL Server).Log in as the root user or another user with the necessary privileges:
+
+````
+
+mysql -u root -p
+````
+
+It will ask for your password which you had to create during the installation. Once logged in, type the command `source` plus the path to the database schema:
+
+````
+
+source ../bacterial_growth/src/sql_scripts/create_db.sql;
+````
+
+> [!NOTE]
+> Make your the provided path is compleate and correct, this can change depending on where are you located.
+
+### 3. Populate the metabolite table from the MCO Ontology and the taxa table from NCBI taxonomy
+
+This database also includes metabolite names and IDs gathered from the MCO ontology, as well as taxa information from the NCBI taxonomy database.
+
+#### 1. Populate the Metabolites table
+
+To populate this table into the database go `src/sql_scripts` and run the `populate_metadb.py` with the following command:
+
+````
+
+python populate_metadb.py
+````
+
+#### 2. Populate the Taxa table
+
+
+## 3. Init the app 
+This application was developed in [Streamlit](https://docs.streamlit.io/). To initialize the you need to have
 Under the `app/.streamlit` folder a file called `secrets.toml` with the following:
 ```yaml
 [connections.BacterialGrowth]
@@ -45,7 +87,8 @@ password = "yourpassword"
 host = "yourhost"
 database = "BacterialGrowth"
 ```
-For more information go to the ^[Streamlit's documentation](https://docs.streamlit.io/develop/concepts/connections/secrets-management).
+For more information go to the [Streamlit's documentation](https://docs.streamlit.io/develop/concepts/connections/secrets-management).
+
 > [!IMPORTANT]
 > Secrets are private! Do not forget to add the path to the secrets.toml to your `.gitignore`.
 
