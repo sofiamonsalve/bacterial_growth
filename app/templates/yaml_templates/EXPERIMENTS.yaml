@@ -3,9 +3,9 @@ Biological_Replicate_IDs:
 Biological_Replicates_Number:
 - 6
 Community_ID:
-- Synthetic_Community
+- community1
 Compartment_ID:
-- compartment1
+- WC
 Control:
 - biorep6
 Control_Description:
@@ -13,11 +13,7 @@ Control_Description:
 Cultivation_Mode:
 - chemostat
 Experiment_Description:
-- 'six parallel bioreactors in chemostat mode, total cell counts were obtained via
-  flow cytometry. The community was composed of gut bacterial species: Roseburia intestinalis
-  DSM 14610 (RI), Blautia hydrogenotrophica DSM 10507 (BH), Collinsella aerofaciens
-  RCC 1377 (CA), and Bacteroides thetaiotaomicron DSM 2079 (BT) and Prevotella copri
-  DSM18205 (PC).'
+- '6 bioreactors in chemostat mode, synthetic community: RI, BH, CA, BT, PC.'
 Experiment_ID:
 - Synthetic_Human_Gut
 Measurement_Technique:

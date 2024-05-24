@@ -3,7 +3,7 @@ CO2%:
 Carbon_Source:
 - 1
 Compartment_ID:
-- compartment1
+- WC
 Compartment_Pressure:
 - 1
 Compartment_StirringMode:

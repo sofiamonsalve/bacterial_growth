@@ -201,7 +201,7 @@ def tabs_plots(df_growth,experiment_with_bioreps):
                 if 'Plate_counts' in growth_df.columns:
                     with st.expander(f"**Plate Counts: {exp}**"):
                         st.dataframe(growth_df[["Biological_Replicate_id","Time","Plate_counts"]])
-                    fig = px.line(growth_df, x='Time', y='Plate_counts',color='Biological_Replicate_id' ,title=f'Plate Counts for Experiment:{exp} per Biological replicates')
+                    fig = px.line(growth_df, x='Time', y='Plate_counts',color='Biological_Replicate_id' ,title=f'Plate Counts for Experiment: {exp} per Biological replicates')
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.warning("The Biological Replicate IDs selected do not contain Plate Counts data")
@@ -210,7 +210,7 @@ def tabs_plots(df_growth,experiment_with_bioreps):
                 if 'pH' in growth_df.columns:
                     with st.expander(f"**pH: {exp}**"):
                         st.dataframe(growth_df[["Biological_Replicate_id","Time","pH"]])
-                    fig = px.line(growth_df, x='Time', y='pH',color='Biological_Replicate_id' ,title=f'Plate Counts for Experiment:{exp} per Biological replicates')
+                    fig = px.line(growth_df, x='Time', y='pH',color='Biological_Replicate_id' ,title=f'pH for Experiment: {exp} per Biological replicates')
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.warning("The Biological Replicate IDs selected do not contain pH data")
@@ -220,7 +220,12 @@ def tabs_plots(df_growth,experiment_with_bioreps):
                     with st.expander(f"**FC: {exp}**"):
                         st.dataframe(growth_df[["Biological_Replicate_id","Time","FC"]])
                     
-                    fig = px.line(growth_df, x='Time', y='FC',color='Biological_Replicate_id' ,title=f'Plate Counts for Experiment:{exp} per Biological replicates')
+                    fig = px.line(growth_df, x='Time', y='FC',color='Biological_Replicate_id' ,title=f'FC counts for Experiment: {exp} per Biological replicates',
+                                  labels={
+                                        'Time': 'Hours',
+                                        'FC': 'Cells/mL',
+                                    },
+                                    markers=True)
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.warning("The Biological Replicate IDs selected do not contain FC data")
@@ -240,9 +245,17 @@ def tabs_plots(df_growth,experiment_with_bioreps):
                         melted_df['Log_Cells/mL'] = np.log10(melted_df['Cells/mL'])
                         on = st.toggle("Apply Log", key=f"toogle_{biorepID}")
                         if on:
-                            fig = px.line(melted_df, x='Time', y='Log_Cells/mL',color='Species' ,title=f'16S rRNA Sequencing Counts: {biorepID} per Microbial Strain')
+                            fig = px.line(melted_df, x='Time', y='Log_Cells/mL',color='Species' ,title=f'16S rRNA Sequencing Counts: {biorepID} per Microbial Strain',
+                                        labels={
+                                        'Time': 'Hours',
+                                    },
+                                    markers=True)
                         else:
-                            fig = px.line(melted_df, x='Time', y='Cells/mL',color='Species' ,title=f'16S rRNA Sequencing Counts: {biorepID} per Microbial Strain')
+                            fig = px.line(melted_df, x='Time', y='Cells/mL',color='Species' ,title=f'16S rRNA Sequencing Counts: {biorepID} per Microbial Strain',
+                                          labels={
+                                        'Time': 'Hours',
+                                    },
+                                    markers=True)
                         st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.warning("The Biological Replicate IDs selected do not contain 16S rRNA Sequencing data")
@@ -261,7 +274,11 @@ def tabs_plots(df_growth,experiment_with_bioreps):
                                 value_vars=metabolites_columns,
                                 var_name='Metabolites', value_name='mg/L')
                         print(melted_df.head())
-                        fig = px.line(melted_df, x='Time', y='mg/L',color='Metabolites',title=f'Metabolites Concentrations: {biorepID} per Metabolite')
+                        fig = px.line(melted_df, x='Time', y='mg/L',color='Metabolites',title=f'Metabolites Concentrations: {biorepID} per Metabolite',
+                                      labels={
+                                        'Time': 'Hours',
+                                    },
+                                    markers=True)
                         st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.warning("The Biological Replicate IDs selected do not contain Metabolite data")
