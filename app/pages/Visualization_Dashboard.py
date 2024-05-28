@@ -192,7 +192,11 @@ def tabs_plots(df_growth,experiment_with_bioreps):
                 if 'OD' in growth_df.columns:
                     with st.expander(f"**OD Data for Experiment: {exp}**"):
                         st.dataframe(growth_df[["Biological_Replicate_id","Time","OD"]])
-                    fig = px.line(growth_df, x='Time', y='OD',color='Biological_Replicate_id' ,title=f'OD Plot for Experiment: {exp} per Biological replicates')
+                    fig = px.line(growth_df, x='Time', y='OD',color='Biological_Replicate_id' ,title=f'OD Plot for Experiment: {exp} per Biological replicates',
+                                  labels={
+                                        'Time': 'Hours',
+                                    },
+                                    markers=True)
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.warning("The Biological Replicate ID selected do not contain OD data")
@@ -227,8 +231,41 @@ def tabs_plots(df_growth,experiment_with_bioreps):
                                     },
                                     markers=True)
                     st.plotly_chart(fig, use_container_width=True)
-                else:
-                    st.warning("The Biological Replicate IDs selected do not contain FC data")
+
+            for exp, reads_df in result_reads_df_dict.items():
+                counts_col = [col for col in reads_df.columns if not col.endswith('_reads')]
+                if counts_col:
+                    with st.expander(f"**FC counts per Species: {exp}**"):
+                        st.dataframe(reads_df)
+                    unique_biorep_ids = reads_df['Biological_Replicate_id'].unique()
+                    for biorepID in unique_biorep_ids:
+                        filtered_per_biorep_df = reads_df[reads_df['Biological_Replicate_id'] == biorepID]
+                        #non_nan_columns = filtered_per_biorep_df.columns[filtered_per_biorep_df.notna().any()].tolist()
+                        filtered_per_biorep_df = filtered_per_biorep_df.dropna(axis=1,how='all')
+                        species_columns = filtered_per_biorep_df.filter(like='_counts').columns
+
+                        melted_df = filtered_per_biorep_df.melt(id_vars=['Time', 'Biological_Replicate_id'],
+                                    value_vars=species_columns,
+                                    var_name='Species', value_name='Cells/mL')
+                        melted_df['Log_Cells/mL'] = np.log10(melted_df['Cells/mL'])
+                        on = st.toggle("Apply Log", key=f"toogle_FC_{biorepID}")
+                        if on:
+                            fig = px.line(melted_df, x='Time', y='Log_Cells/mL',color='Species' ,title=f'FC Counts: {biorepID} per Microbial Strain',
+                                            labels={
+                                            'Time': 'Hours',
+                                        },
+                                        markers=True)
+                        else:
+                            fig = px.line(melted_df, x='Time', y='Cells/mL',color='Species' ,title=f'FC Counts: {biorepID} per Microbial Strain',
+                                            labels={
+                                            'Time': 'Hours',
+                                        },
+                                        markers=True)
+                        st.plotly_chart(fig, use_container_width=True)
+
+                #else:
+                #    st.warning("The Biological Replicate IDs selected do not contain FC data")
+                
         with tab5:
             for exp, reads_df in result_reads_df_dict.items():
                 reads_col = [col for col in reads_df.columns if not col.endswith('_reads')]
@@ -262,19 +299,21 @@ def tabs_plots(df_growth,experiment_with_bioreps):
 
         with tab6:
             for exp, growth_df in result_growth_df_dict.items():
-                columns_to_keep = [col for col in growth_df.columns if not col.endswith('_std') and col not in ["Biological_Replicate_id", "Time", "FC", "OD","Plate_counts","Position"]]
+                columns_to_keep = [col for col in growth_df.columns if not col.endswith('_std') and col not in ["Biological_Replicate_id", "Time", "FC", "OD","Plate_counts","Position","pH"]]
                 if columns_to_keep:
                     with st.expander(f"**Metabolites: {exp}**"):
                         st.dataframe(growth_df)
                     unique_biorep_ids = growth_df['Biological_Replicate_id'].unique()
                     for biorepID in unique_biorep_ids:
-                        filtered_per_biorep_df = growth_df[reads_df['Biological_Replicate_id'] == biorepID]
-                        metabolites_columns = filtered_per_biorep_df.filter(columns_to_keep)
+                        filtered_per_biorep_df = growth_df[growth_df['Biological_Replicate_id'] == biorepID]
+                        #non_nan_columns = filtered_per_biorep_df.columns[filtered_per_biorep_df.notna().any()].tolist()
+                        filtered_per_biorep_df = filtered_per_biorep_df.dropna(axis=1, how='all')
+                        metabolites_columns = filtered_per_biorep_df.filter(columns_to_keep).columns
                         melted_df = filtered_per_biorep_df.melt(id_vars=['Time', 'Biological_Replicate_id'],
                                 value_vars=metabolites_columns,
-                                var_name='Metabolites', value_name='mg/L')
+                                var_name='Metabolites', value_name='mM')
                         print(melted_df.head())
-                        fig = px.line(melted_df, x='Time', y='mg/L',color='Metabolites',title=f'Metabolites Concentrations: {biorepID} per Metabolite',
+                        fig = px.line(melted_df, x='Time', y='mM',color='Metabolites',title=f'Metabolites Concentrations: {biorepID} per Metabolite',
                                       labels={
                                         'Time': 'Hours',
                                     },
